@@ -1,0 +1,15 @@
+# Secrets
+.env
+.id_rsa
+id_rsa.pub
+
+# Data files
+data/
+result/
+ChatExport_*/
+
+# Site
+
+# Windows
+nul
+Thumbs.db
