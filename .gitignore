@@ -5,10 +5,14 @@ id_rsa.pub
 
 # Data files
 data/
-result/
 ChatExport_*/
 
 # Site
+site/.docusaurus.zip
+
+# Python
+__pycache__/
+*.pyc
 
 # Windows
 nul
