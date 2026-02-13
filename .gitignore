@@ -5,6 +5,7 @@ id_rsa.pub
 
 # Data files
 data/
+result/
 ChatExport_*/
 
 # Site
