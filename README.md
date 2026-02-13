@@ -1,18 +1,25 @@
 # MayaVox
 
-Инструментарий для анализа Telegram-чатов и Telegram-бот для ответов на вопросы по результатам анализа.
+Инструментарий для анализа Telegram-чатов проекта "Майя".
 
-## Что это?
+## Структура проекта
 
-Проект решает задачу извлечения структурированной информации из истории Telegram-чата:
+```
+mayavox/
+├── utils/                # 1. Анализ чата
+├── site/                 # 2. Сайт документации
+└── app/                  # 3. Telegram-бот
+```
 
-1. **Подготовка данных** — конвертация экспорта в текст, транскрибация аудио/видео
-2. **Анализ содержания** — выделение участников, проектов, позиций, эволюции идей
-3. **Доступ к результатам** — Telegram-бот для вопросов по анализу
+---
 
-## Методология
+## 1. Анализ чата
 
-### Фаза 1: Подготовка данных
+Извлечение структурированной информации из истории Telegram-чата.
+
+### Методология
+
+**Фаза 1: Подготовка данных**
 
 | Шаг | Описание | Инструмент |
 |-----|----------|------------|
@@ -21,37 +28,18 @@
 | Видео → текст | Извлечение аудио и транскрибация | FFmpeg + Whisper |
 | Документы → MD | Конвертация вложений | Pandoc |
 
-### Фаза 2: Анализ содержания
+**Фаза 2: Анализ содержания**
 
 - **Участники** — кто есть кто, роли, активность
 - **Проекты** — что обсуждалось, описания
 - **Эволюция концепции** — как менялось видение проекта
 - **Позиции участников** — кто что думал и когда
 
-## Быстрый старт
-
-### Установка
+### Использование
 
 ```bash
-pip install python-telegram-bot requests python-dotenv beautifulsoup4
-```
+pip install beautifulsoup4
 
-### Настройка
-
-```bash
-cp .env.example .env
-# Заполните API_KEY и TELEGRAM_BOT_TOKEN
-```
-
-### Запуск бота
-
-```bash
-cd app && python telegram_bot.py
-```
-
-## Утилиты
-
-```bash
 # Конвертация HTML экспорта в текст
 PYTHONIOENCODING=utf-8 python utils/html_to_txt.py "ChatExport/messages.html"
 
@@ -65,24 +53,80 @@ python utils/transcribe_audio.py
 python utils/pdf_to_md.py "document.pdf"
 ```
 
-## Структура
+---
 
+## 2. Сайт документации
+
+Статический сайт на Docusaurus с результатами анализа.
+
+### Установка
+
+```bash
+cd site
+npm install
 ```
-mayavox/
-├── app/                  # Telegram-бот (Hydra AI)
-├── utils/                # Утилиты обработки
-├── result/               # Результаты анализа
-└── site/                 # Документация (Docusaurus)
+
+### Разработка
+
+```bash
+npm start
 ```
+
+### Сборка
+
+```bash
+npm run build
+```
+
+### Деплой
+
+```bash
+python ../utils/deploy.py
+```
+
+---
+
+## 3. Telegram-бот
+
+Бот для ответов на вопросы по результатам анализа через Hydra AI.
+
+### Установка
+
+```bash
+pip install python-telegram-bot requests python-dotenv
+```
+
+### Настройка
+
+```bash
+cp .env.example .env
+```
+
+Заполните в `.env`:
+- `API_KEY` — ключ Hydra AI
+- `TELEGRAM_BOT_TOKEN` — токен бота от @BotFather
+
+### Запуск
+
+```bash
+cd app && python telegram_bot.py
+```
+
+### Команды
+
+- `/start` — Приветствие
+- `/help` — Справка
+- Любой текст — Вопрос к AI
+
+---
 
 ## Технологии
 
-- **Python 3.12** — основной язык
-- **BeautifulSoup4** — парсинг HTML
-- **Whisper** — транскрибация аудио
-- **FFmpeg** — обработка видео
-- **Hydra AI** — LLM для бота (OpenAI-совместимый API)
-- **python-telegram-bot** — Telegram API
+| Компонент | Стек |
+|-----------|------|
+| Анализ чата | Python 3.12, BeautifulSoup4, Whisper, FFmpeg |
+| Сайт | Docusaurus, React, TypeScript |
+| Бот | python-telegram-bot, Hydra AI API |
 
 ## Лицензия
 
